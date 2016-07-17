@@ -1,3 +1,4 @@
+<?php include '../autoload.php'; ?>
 <html>
 <head>
 	<title>Solucionador de Sudokus</title>
@@ -9,7 +10,6 @@
 	<div class="container">
 		<?php include '../application/sudokuForm.php'; ?>
 		<?php include '../application/calculator.php'; ?>
-		<?php //include '../application/main.php'; ?>
 	</div>
 	<footer>
 		<p>Aplicación creada por Iván de la Beldad Fernández</p>
