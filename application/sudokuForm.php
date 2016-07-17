@@ -1,4 +1,4 @@
-<form action="../public/index.php" method="post">
+<form action="/" method="post">
 
 <table>
 <?php 
