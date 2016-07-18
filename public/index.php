@@ -8,8 +8,7 @@
 <body>
 	<h1>Solucionador de Sudokus</h1>
 	<div class="container">
-		<?php include '../application/sudokuForm.php'; ?>
-		<?php include '../application/calculator.php'; ?>
+		<?php include '../application/controllers/main.php'; ?>
 	</div>
 	<footer>
 		<p>Aplicación creada por Iván de la Beldad Fernández</p>

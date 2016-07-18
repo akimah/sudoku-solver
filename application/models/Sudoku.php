@@ -1,6 +1,6 @@
 <?php
 
-class Sudoku
+class Sudoku implements Observer
 {
     const LIMIT_LEFT = 1;
     const LIMIT_RIGHT = 9;
@@ -12,14 +12,23 @@ class Sudoku
     public function __construct(array $values = array())
     {
         $this->cells = array();
-        for ($vertical = 1; $vertical <= 9; $vertical++) {
-            for ($horizontal = 1; $horizontal <= 9; $horizontal++) {
-                if (!isset($values[$horizontal][$vertical])) $values[$horizontal][$vertical] = 0;
+        for ($vertical = $this::LIMIT_TOP; $vertical <= $this::LIMIT_BOTTOM; $vertical++) {
+            for ($horizontal = $this::LIMIT_LEFT; $horizontal <= $this::LIMIT_RIGHT; $horizontal++) {
+
+                if (!isset($values[$horizontal][$vertical]))
+                    $values[$horizontal][$vertical] = 0;
+
                 $position = new Position($horizontal, $vertical);
                 $cell = new Cell($position, $values[$horizontal][$vertical]);
+                $cell->addObserver($this);
                 array_push($this->cells, $cell);
+
             }
         }
+
+        for ($i = 0; $i < count($this->cells); $i++)
+            PossibilityUpdater::updatePossibilities($this, $this->cells[$i]);
+
     }
 
     public function getCells(): array
@@ -46,36 +55,11 @@ class Sudoku
         return $cell->getValue();
     }
 
-    function printSudokuWithClass($title)
+    function update(Observable &$observable)
     {
-        echo "<div class='container sub-container'>";
-        echo "<h2>" . $title . "</h2>";
-        echo "<table>";
-        for ($i = 1; $i <= 9; $i++) {
-            echo "<tr>";
-
-            for ($j = 1; $j <= 9; $j++) {
-                echo "<td class='";
-                if ($i == 3 || $i == 6 || $i == 9)
-                    echo 'bottom-strong ';
-                if ($j == 3 || $j == 6 || $j == 9)
-                    echo 'right-strong ';
-                if ($j == 1)
-                    echo 'left-strong ';
-                if ($i == 1)
-                    echo 'top-strong ';
-                echo "'>";
-
-                // GET CURRENT CELL
-                $currentCell = $this->getCell(new Position($i, $j));
-                if ($currentCell->isFilled())
-                    echo $currentCell->getValue();
-                echo "</td>";
-            }
-            echo "</tr>";
+        if ($observable instanceof Cell) {
+            PossibilityUpdater::updatePossibilities($this, $observable);
         }
-        echo "</table>";
-        echo "</div>";
     }
 
 }

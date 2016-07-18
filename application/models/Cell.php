@@ -1,69 +1,56 @@
 <?php
 
-class Cell
+class Cell implements Observable
 {
+    const NULL_VALUE = 0;
     private $position;
     private $value;
     private $possibility;
+    private $observers;
 
     function __construct(Position $position, $content)
     {
+        $this->observers = array();
         $this->position = $position;
         $this->value = $content;
-        $this->possibility = new Possibility();
+        if ($this->isFilled())
+            $this->possibility = new Possibility();
+        else
+            $this->possibility = new Possibility([1,2,3,4,5,6,7,8,9]);
     }
 
-    /**
-     * @return Position
-     */
     public function getPosition(): Position
     {
         return $this->position;
     }
 
-    /**
-     * @param Position $position
-     */
     public function setPosition(Position $position)
     {
         $this->position = $position;
     }
 
-    /**
-     * @return int
-     */
     public function getValue()
     {
         return $this->value;
     }
 
-    /**
-     * @param mixed $value
-     */
     public function setValue($value)
     {
         $this->value = $value;
+        $this->possibility = new Possibility();
+        $this->notifyObservers();
     }
 
-    /**
-     * @return bool
-     */
     public function isEmpty():bool
     {
-        return $this->getValue() == 0;
+        return $this->getValue() == $this::NULL_VALUE;
     }
 
-    /**
-     * @return bool
-     */
     public function isFilled():bool
     {
-        return $this->getValue() != 0;
+        return $this->getValue() != $this::NULL_VALUE;
     }
 
-    /**
-     * @return Possibility
-     */
     public function getPossibility(): Possibility
     {
         return $this->possibility;
@@ -72,7 +59,30 @@ class Cell
     public function setValueIfUnique()
     {
         if ($this->possibility->isUnique()) {
-            $this->value = $this->possibility->getPossibility(0);
+            $this->setValue($this->possibility->getPossibility(0));
+            $this->getPossibility()->removePossibility($this->value);
+        }
+    }
+
+    function addObserver(Observer &$observer)
+    {
+        array_push($this->observers, $observer);
+    }
+
+    function removeObserver(Observer &$observer)
+    {
+        for ($i = 0; $i < count($this->observers); $i++){
+            if ($this->observers[$i] == $observer) {
+                array_splice($this->observers, $i, 1);
+            }
+        }
+    }
+
+    function notifyObservers()
+    {
+        foreach ($this->observers as $o) {
+            if ($o instanceof Observer)
+                $o->update($this);
         }
     }
 
