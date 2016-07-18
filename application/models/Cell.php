@@ -56,12 +56,14 @@ class Cell implements Observable
         return $this->possibility;
     }
 
-    public function setValueIfUnique()
+    public function setValueIfUnique():bool
     {
         if ($this->possibility->isUnique()) {
             $this->setValue($this->possibility->getPossibility(0));
             $this->getPossibility()->removePossibility($this->value);
+            return true;
         }
+        return false;
     }
 
     function addObserver(Observer &$observer)

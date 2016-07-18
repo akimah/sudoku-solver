@@ -1,64 +1,82 @@
 <?php
 
-class SudokuCalculator
+class SudokuCalculator implements Observer
 {
 
     private $sudoku;
-
-    private $changes = true;
+    private $hasChanged;
 
     function __construct(Sudoku &$sudoku)
     {
         $this->sudoku = $sudoku;
+        foreach ($this->sudoku->getCells() as $cell) {
+            if ($cell instanceof Cell) {
+                $cell->addObserver($this);
+            }
+        }
+        $this->hasChanged = true;
     }
 
     function calculate()
     {
-        while ($this->changes) {
-            $this->changes = false;
-            for ($horizontal = Sudoku::LIMIT_LEFT; $horizontal <= Sudoku::LIMIT_RIGHT; $horizontal++) {
-                for ($vertical = Sudoku::LIMIT_TOP; $vertical <= Sudoku::LIMIT_BOTTOM; $vertical++) {
-
-                    $currentPosition = new Position($horizontal, $vertical);
-                    $currentCell = $this->sudoku->getCell($currentPosition);
-
-                    $this->assignByDiscard($currentCell);
-
-                }
-            }
+        while ($this->hasChanged) {
+            $this->hasChanged = false;
+            $this->assignSimple();
+            $this->assignByPossibilityHorizontal();
+            $this->assignByPossibilityVertical();
+            $this->assignByPossibilityQuadrant();
         }
-
-        $this->printInformation();
-
     }
 
-    private function printInformation()
+    private function assignSimple()
     {
-        echo "<table style='font-size: 14px'>";
         foreach ($this->sudoku->getCells() as $cell) {
-            if ($cell instanceof Cell) {
-                echo "<tr>";
-                echo "<td style='width: 100px;'>" . "Valor: " . $cell->getValue() . "</td>";
-                echo "<td style='width: 150px;'>" . " Posicion: [ " . $cell->getPosition()->getHorizontal() . ", " . $cell->getPosition()->getVertical() . " ] " . "</td>";
-                echo "<td style='width: 300px; text-align: left; padding-left: 10px'>" . " Posibilidades: ";
-                foreach ($cell->getPossibility()->getPossibilities() as $p) {
-                    echo $p . ", ";
-                }
-                echo  "</td>";
-                echo "</tr>";
-            }
+            $cell->setValueIfUnique();
         }
-        echo "</table>";
-
     }
 
-    private function assignByDiscard(Cell &$cell)
+    private function assignByPossibilityHorizontal()
     {
-        if ($cell->getPossibility()->isUnique()) {
-            $this->changes = true;
-            $cell->setValueIfUnique();
-            SudokuPrinter::print($this->sudoku, "Por descarte (Simple)");
+        foreach ($this->sudoku->getCells() as $cell) {
+            $allPossibilities = PossibilitiesCalculator::getHorizontal($this->sudoku, $cell);
+            foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
+                if ($allPossibilities->notExists($possibility)) {
+                    $cell->setValue($possibility);
+                    return;
+                }
+            }
         }
+    }
+
+    private function assignByPossibilityVertical()
+    {
+        foreach ($this->sudoku->getCells() as $cell) {
+            $allPossibilities = PossibilitiesCalculator::getVertical($this->sudoku, $cell);
+            foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
+                if ($allPossibilities->notExists($possibility)) {
+                    $cell->setValue($possibility);
+                    return;
+                }
+            }
+        }
+    }
+
+    private function assignByPossibilityQuadrant()
+    {
+        foreach ($this->sudoku->getCells() as $cell) {
+            $allPossibilities = PossibilitiesCalculator::getQuadrant($this->sudoku, $cell);
+            foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
+                if ($allPossibilities->notExists($possibility)) {
+                    $cell->setValue($possibility);
+                    return;
+                }
+            }
+        }
+    }
+
+    function update(Observable &$observable)
+    {
+        $this->hasChanged = true;
     }
 
 }

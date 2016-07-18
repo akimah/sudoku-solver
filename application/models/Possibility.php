@@ -27,7 +27,7 @@ class Possibility
 
     public function addPossibility($value)
     {
-        if ($this->existsPossilibity($value)) return;
+        if ($this->exists($value)) return;
         array_push($this->possibilities, $value);
     }
 
@@ -40,7 +40,7 @@ class Possibility
 
     public function removePossibility($value)
     {
-        if (!$this->existsPossilibity($value)) return;
+        if (!$this->exists($value)) return;
         for ($i = 0; $i < count($this->possibilities); $i++) {
             if ($value == $this->possibilities[$i]){
                 $offset = $i;
@@ -51,11 +51,23 @@ class Possibility
         array_splice($this->possibilities, $offset, 1);
     }
 
-    public function removePossibilities()
+    public function removePosibilities(array $values)
+    {
+        foreach ($values as $value) {
+            $this->removePossibility($value);
+        }
+    }
+
+    public function removeAllPossibilities()
     {
         for ($value = 1; $value <= 9; $value++) {
             $this->removePossibility($value);
         }
+    }
+
+    public function setPossibility(Possibility $possibility)
+    {
+        $this->possibilities = $possibility->getPossibilities();
     }
 
     public function getPossibility($position)
@@ -63,7 +75,7 @@ class Possibility
         return $this->possibilities[$position];
     }
 
-    public function existsPossilibity($value)
+    public function exists($value):bool
     {
         for ($i = 0; $i < count($this->possibilities); $i++) {
             if ($value == $this->possibilities[$i]) {
@@ -71,6 +83,11 @@ class Possibility
             }
         }
         return false;
+    }
+
+    public function notExists($value):bool
+    {
+        return !$this->exists($value);
     }
 
 }

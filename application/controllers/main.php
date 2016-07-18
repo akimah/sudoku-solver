@@ -1,7 +1,7 @@
 <?php
 
 SudokuForm::print();
-$sudoku = new Sudoku(ExampleSudokuHard::getSudoku());
+$sudoku = new Sudoku(ExampleSudokuHardv2::getSudoku());
 SudokuPrinter::print($sudoku, "Estado inicial");
 $calculator = new SudokuCalculator($sudoku);
 $calculator->calculate();

@@ -40,7 +40,7 @@ class PossibilityUpdater
     private static function updateCell(Cell &$cell)
     {
         if ($cell->isFilled())
-            $cell->getPossibility()->removePossibilities();
+            $cell->getPossibility()->removeAllPossibilities();
     }
 
 }
