@@ -1,0 +1,16 @@
+{% macro setBorderClass(horizontal, vertical) %}
+    {% set class = '' %}
+    {% if vertical%3 == 0 %}
+        {% set class = class ~ 'bottom-strong ' %}
+    {% endif %}
+    {% if horizontal%3 == 0 %}
+        {% set class = class ~ 'right-strong ' %}
+    {% endif %}
+    {% if horizontal==1 %}
+        {% set class = class ~ 'left-strong ' %}
+    {% endif %}
+    {% if vertical==1 %}
+        {% set class = class ~ 'top-strong' %}
+    {% endif %}
+    {{ class }}
+{% endmacro %}

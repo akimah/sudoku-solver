@@ -6,9 +6,9 @@ class SudokuCalculator implements Observer
     private $sudoku;
     private $hasChanged;
 
-    function __construct(Sudoku &$sudoku)
+    function __construct(Sudoku $sudoku)
     {
-        $this->sudoku = $sudoku;
+        $this->sudoku = clone $sudoku;
         foreach ($this->sudoku->getCells() as $cell) {
             if ($cell instanceof Cell) {
                 $cell->addObserver($this);
@@ -77,6 +77,11 @@ class SudokuCalculator implements Observer
     function update(Observable &$observable)
     {
         $this->hasChanged = true;
+    }
+
+    public function getSudoku():Sudoku
+    {
+        return $this->sudoku;
     }
 
 }

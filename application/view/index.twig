@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sudoku Solver</title>
+
+    {% block stylesheets %}
+        <link href="css/style.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
+        <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link href="css/bootstrap-material-design.min.css" type="text/css" rel="stylesheet" />
+        <link href="css/ripples.min.css" type="text/css" rel="stylesheet" />
+    {% endblock %}
+
+</head>
+<body>
+<header>
+    <div class="well text-center">
+        <h2 class="">SUDOKU SOLVER</h2>
+    </div>
+</header>
+
+<section class="text-center">
+    <article>
+        {% include ('sudokuForm.twig') %}
+    </article>
+</section>
+
+{% if sudokuCompleted is defined %}
+<section class="text-center">
+    <div>
+        <article class="col-md-6">
+            {% include ('sudokuPrinter.twig') with {'title':"Original", 'sudoku':sudokuEmpty} %}
+        </article>
+        <article class="col-md-6">
+            {% include ('sudokuPrinter.twig') with {
+            'title':"Resolved",
+            'sudokuOriginal':sudokuEmpty,
+            'sudoku':sudokuCompleted
+            } %}
+        </article>
+    </div>
+</section>
+{% endif %}
+
+{% if error is defined %}
+    {% include ('cannotResolve.twig') %}
+{% endif %}
+
+{% block scripts %}
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/material.min.js"></script>
+    <script src="js/ripples.min.js"></script>
+    <script src="js/main.js"></script>
+{% endblock %}
+
+</body>
+</html>

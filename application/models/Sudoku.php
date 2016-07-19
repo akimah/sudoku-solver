@@ -55,11 +55,45 @@ class Sudoku implements Observer
         return $cell->getValue();
     }
 
+    public function isCompleted():bool
+    {
+        foreach ($this->cells as $cell){
+            if ($cell instanceof Cell) {
+                if ($cell->isEmpty()) return false;
+            }
+        }
+        return true;
+    }
+
+    public function isIncompleted():bool
+    {
+        return !$this->isCompleted();
+    }
+
     function update(Observable &$observable)
     {
         if ($observable instanceof Cell) {
             PossibilityUpdater::updatePossibilities($this, $observable);
         }
+    }
+
+    public function toArray():array
+    {
+        $sudokuArray = array();
+        for ($vertical = 1; $vertical <= 9; $vertical++) {
+            $sudokuArray[$vertical] = array();
+            for ($horizontal = 1; $horizontal <= 9; $horizontal++) {
+                foreach ($this->getCells() as $cell){
+                    if ($cell instanceof Cell) {
+                        if ($cell->getPosition()->getVertical() == $vertical &&
+                            $cell->getPosition()->getHorizontal() == $horizontal)
+                            $currentCell = $cell;
+                    }
+                }
+                $sudokuArray[$vertical][$horizontal] = $currentCell->getValue();
+            }
+        }
+        return $sudokuArray;
     }
 
 }
