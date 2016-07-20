@@ -5,12 +5,12 @@
     <title>Sudoku Solver</title>
 
     {% block stylesheets %}
-        <link href="css/style.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700">
         <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/icon?family=Material+Icons">
-        <link href="css/bootstrap.min.css" type="text/css" rel="stylesheet" />
-        <link href="css/bootstrap-material-design.min.css" type="text/css" rel="stylesheet" />
-        <link href="css/ripples.min.css" type="text/css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-material-design.min.css" />
+        <link rel="stylesheet" type="text/css" href="css/ripples.min.css" />
     {% endblock %}
 
 </head>
@@ -23,7 +23,7 @@
 
 <section class="text-center">
     <article>
-        {% include ('sudokuForm.twig') %}
+        {% include ('sudokuForm.twig') with {'title':"Fill and Solve!"} %}
     </article>
 </section>
 
@@ -35,7 +35,7 @@
         </article>
         <article class="col-md-6">
             {% include ('sudokuPrinter.twig') with {
-            'title':"Resolved",
+            'title':"Solved",
             'sudokuOriginal':sudokuEmpty,
             'sudoku':sudokuCompleted
             } %}
@@ -49,12 +49,19 @@
 {% endif %}
 
 {% block scripts %}
-    <script src="js/jquery.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/material.min.js"></script>
-    <script src="js/ripples.min.js"></script>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/material.min.js"></script>
+    <script type="text/javascript" src="js/ripples.min.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 {% endblock %}
+
+<footer class="col-lg-12">
+    <h4>
+        <span>Web Application development by </span>
+        <a href="https://github.com/ivandelabeldad">Iván de la Beldad Fernández</a>
+    </h4>
+</footer>
 
 </body>
 </html>

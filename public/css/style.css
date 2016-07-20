@@ -5,6 +5,10 @@ table * {
 header {
 	margin-bottom: 50px;
 }
+header h2 {
+	color: #448AFF;
+	padding-bottom: 5px;
+}
 
 section {
 	margin-bottom: 60px;
@@ -29,10 +33,23 @@ select {
 	border: 0;
    	-webkit-appearance: none;
    	-moz-appearance: none;
-   	appearance: none;
-	padding-left: 15px;
+	padding-left: 14px;
 }
 
+footer {
+	margin-top: 50px;
+	padding: 60px 0;
+	background-color: #448AFF;
+	text-align: center;
+	color: rgba(255, 255, 255, 0.85);
+}
+footer a {
+	color: rgba(255, 255, 255, 0.9);
+}
+footer a:hover {
+	color: rgba(255, 255, 255, 0.8);
+	text-decoration: none;
+}
 .container {
 	margin: 20px auto;
 	text-align: center;
@@ -62,4 +79,14 @@ select {
 .sudoku-panel {
 	width: 400px;
 	margin: auto;
+}
+
+header .well, footer.well {
+	border-radius: 0;
+	border-left: 0;
+	border-right: 0;
+}
+
+div.panel.panel-info>.panel-heading {
+	background-color: #448AFF;
 }

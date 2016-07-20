@@ -2,7 +2,7 @@
 
 class PostConverter
 {
-    public static function toSudoku($values):Sudoku
+    public static function toSudoku($values)
     {
         $sudokuArray = array();
 

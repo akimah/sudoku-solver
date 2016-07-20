@@ -25,6 +25,7 @@ class QuadrantFactory
             case self::Q_TOP_LEFT: return new QuadrantTopLeft();
             case self::Q_TOP_RIGHT: return new QuadrantTopRight();
         }
+        return null;
     }
 
     static function createQuadrantBottomCenter()

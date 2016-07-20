@@ -31,12 +31,12 @@ class Sudoku implements Observer
 
     }
 
-    public function getCells(): array
+    public function getCells()
     {
         return $this->cells;
     }
 
-    public function getCell(Position $position): Cell
+    public function getCell(Position $position)
     {
         foreach ($this->cells as $cell) {
             if ($cell instanceof Cell) {
@@ -49,13 +49,13 @@ class Sudoku implements Observer
         return null;
     }
 
-    public function getValue(Position $position):int
+    public function getValue(Position $position)
     {
         $cell = $this->getCell($position);
         return $cell->getValue();
     }
 
-    public function isCompleted():bool
+    public function isCompleted()
     {
         foreach ($this->cells as $cell){
             if ($cell instanceof Cell) {
@@ -65,7 +65,7 @@ class Sudoku implements Observer
         return true;
     }
 
-    public function isIncompleted():bool
+    public function isIncompleted()
     {
         return !$this->isCompleted();
     }
@@ -77,7 +77,7 @@ class Sudoku implements Observer
         }
     }
 
-    public function toArray():array
+    public function toArray()
     {
         $sudokuArray = array();
         for ($vertical = 1; $vertical <= 9; $vertical++) {
@@ -90,6 +90,7 @@ class Sudoku implements Observer
                             $currentCell = $cell;
                     }
                 }
+                if (!isset($currentCell)) $currentCell = null;
                 $sudokuArray[$vertical][$horizontal] = $currentCell->getValue();
             }
         }

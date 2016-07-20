@@ -10,17 +10,17 @@ class Possibility
         $this->possibilities = $possibilities;
     }
 
-    public function isUnique():bool
+    public function isUnique()
     {
         return count($this->possibilities) == 1;
     }
 
-    public function count():int
+    public function count()
     {
         return count($this->possibilities);
     }
 
-    public function getPossibilities(): array
+    public function getPossibilities()
     {
         return $this->possibilities;
     }
@@ -75,7 +75,7 @@ class Possibility
         return $this->possibilities[$position];
     }
 
-    public function exists($value):bool
+    public function exists($value)
     {
         for ($i = 0; $i < count($this->possibilities); $i++) {
             if ($value == $this->possibilities[$i]) {
@@ -85,7 +85,7 @@ class Possibility
         return false;
     }
 
-    public function notExists($value):bool
+    public function notExists($value)
     {
         return !$this->exists($value);
     }

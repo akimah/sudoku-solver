@@ -2,7 +2,7 @@
 
 class PossibilitiesCalculator
 {
-    public static function getHorizontal(Sudoku $sudoku, Cell &$cell): Possibility
+    public static function getHorizontal(Sudoku $sudoku, Cell &$cell)
     {
         $allPossibilities = new Possibility();
         for ($horizontal = Sudoku::LIMIT_LEFT; $horizontal <= Sudoku::LIMIT_RIGHT; $horizontal++) {
@@ -15,7 +15,7 @@ class PossibilitiesCalculator
         return $allPossibilities;
     }
 
-    public static function getVertical(Sudoku $sudoku, Cell &$cell): Possibility
+    public static function getVertical(Sudoku $sudoku, Cell &$cell)
     {
         $allPossibilities = new Possibility();
         for ($vertical = Sudoku::LIMIT_TOP; $vertical <= Sudoku::LIMIT_BOTTOM; $vertical++) {
@@ -28,7 +28,7 @@ class PossibilitiesCalculator
         return $allPossibilities;
     }
 
-    public static function getQuadrant(Sudoku $sudoku, Cell &$cell): Possibility
+    public static function getQuadrant(Sudoku $sudoku, Cell &$cell)
     {
         $allPossibilities = new Possibility();
         $quadrant = $cell->getPosition()->getQuadrant();

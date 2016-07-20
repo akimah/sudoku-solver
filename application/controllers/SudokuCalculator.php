@@ -31,13 +31,15 @@ class SudokuCalculator implements Observer
     private function assignSimple()
     {
         foreach ($this->sudoku->getCells() as $cell) {
-            $cell->setValueIfUnique();
+            if ($cell instanceof Cell)
+                $cell->setValueIfUnique();
         }
     }
 
     private function assignByPossibilityHorizontal()
     {
         foreach ($this->sudoku->getCells() as $cell) {
+            if (!$cell instanceof Cell) return;
             $allPossibilities = PossibilitiesCalculator::getHorizontal($this->sudoku, $cell);
             foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
                 if ($allPossibilities->notExists($possibility)) {
@@ -51,6 +53,7 @@ class SudokuCalculator implements Observer
     private function assignByPossibilityVertical()
     {
         foreach ($this->sudoku->getCells() as $cell) {
+            if (!$cell instanceof Cell) return;
             $allPossibilities = PossibilitiesCalculator::getVertical($this->sudoku, $cell);
             foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
                 if ($allPossibilities->notExists($possibility)) {
@@ -64,6 +67,7 @@ class SudokuCalculator implements Observer
     private function assignByPossibilityQuadrant()
     {
         foreach ($this->sudoku->getCells() as $cell) {
+            if (!$cell instanceof Cell) return;
             $allPossibilities = PossibilitiesCalculator::getQuadrant($this->sudoku, $cell);
             foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
                 if ($allPossibilities->notExists($possibility)) {
@@ -79,7 +83,7 @@ class SudokuCalculator implements Observer
         $this->hasChanged = true;
     }
 
-    public function getSudoku():Sudoku
+    public function getSudoku()
     {
         return $this->sudoku;
     }

@@ -2,22 +2,22 @@
 
 class QuadrantBottomRight implements Quadrant
 {
-    function getLimitLeft():int
+    function getLimitLeft()
     {
         return 7;
     }
 
-    function getLimitRight():int
+    function getLimitRight()
     {
         return 9;
     }
 
-    function getLimitTop():int
+    function getLimitTop()
     {
         return 7;
     }
 
-    function getLimitBottom():int
+    function getLimitBottom()
     {
         return 9;
     }
