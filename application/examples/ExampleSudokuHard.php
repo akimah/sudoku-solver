@@ -6,7 +6,7 @@ class ExampleSudokuHard
     /**
      * @return array
      */
-    public static function getSudoku():array
+    public static function getSudoku()
     {
         $sudoku = array();
         $sudoku [2][3] = "2";

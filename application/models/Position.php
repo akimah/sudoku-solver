@@ -11,17 +11,17 @@ class Position
         $this->vertical = $vertical;
     }
 
-    public function getHorizontal():int
+    public function getHorizontal()
     {
         return $this->horizontal;
     }
 
-    public function getVertical ():int
+    public function getVertical ()
     {
         return $this->vertical;
     }
 
-    public function getQuadrant():Quadrant
+    public function getQuadrant()
     {
         if ($this->vertical <= 3) {
             if ($this->horizontal <= 3)
@@ -47,5 +47,6 @@ class Position
             if ($this->horizontal < 7 && $this->horizontal > 3)
                 return QuadrantFactory::createQuadrantMiddleCenter();
         }
+        return null;
     }
 }

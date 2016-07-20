@@ -2,22 +2,22 @@
 
 class QuadrantMiddleCenter implements Quadrant
 {
-    function getLimitLeft():int
+    function getLimitLeft()
     {
         return 4;
     }
 
-    function getLimitRight():int
+    function getLimitRight()
     {
         return 6;
     }
 
-    function getLimitTop():int
+    function getLimitTop()
     {
         return 4;
     }
 
-    function getLimitBottom():int
+    function getLimitBottom()
     {
         return 6;
     }

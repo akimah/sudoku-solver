@@ -1,13 +1,19 @@
 {% import _self as self %}
-<form action="." method="post" class="text-center">
-    <table>
-        {{ self.printCells() }}
-    </table>
-    <br>
-    <button type="submit" class="btn btn-raised btn-success">ENVIAR</button>
-    <button type="reset" class="btn btn-raised btn-danger">RESET</button>
-</form>
-
+<div class="panel panel-info sudoku-panel">
+    <div class="panel-heading">
+        <h4>{{ title }}</h4>
+    </div>
+    <div class="panel-body">
+    <form action="." method="post" class="text-center">
+        <table>
+            {{ self.printCells() }}
+        </table>
+        <br>
+        <button type="submit" class="btn btn-raised btn-success">CHECK</button>
+        <button type="reset" class="btn btn-raised btn-danger">RESET</button>
+    </form>
+    </div>
+</div>
 {% macro printCells() %}
     {% import _self as self %}
     {% import ('macros.twig') as macros %}

@@ -19,7 +19,7 @@ class Cell implements Observable
             $this->possibility = new Possibility([1,2,3,4,5,6,7,8,9]);
     }
 
-    public function getPosition(): Position
+    public function getPosition()
     {
         return $this->position;
     }
@@ -41,22 +41,22 @@ class Cell implements Observable
         $this->notifyObservers();
     }
 
-    public function isEmpty():bool
+    public function isEmpty()
     {
         return $this->getValue() == $this::NULL_VALUE;
     }
 
-    public function isFilled():bool
+    public function isFilled()
     {
         return $this->getValue() != $this::NULL_VALUE;
     }
 
-    public function getPossibility(): Possibility
+    public function getPossibility()
     {
         return $this->possibility;
     }
 
-    public function setValueIfUnique():bool
+    public function setValueIfUnique()
     {
         if ($this->possibility->isUnique()) {
             $this->setValue($this->possibility->getPossibility(0));
