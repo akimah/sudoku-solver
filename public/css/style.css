@@ -131,3 +131,9 @@ div.panel.panel-info>.panel-heading {
 		font-size: 2rem;
 	}
 }
+
+@media screen and (max-width: 530px){
+	.btn-group {
+		max-width: 150px;
+	}
+}
