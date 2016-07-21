@@ -10,18 +10,29 @@
             {% for vertical in 1..9 %}
                 <tr>
                     {% for horizontal in 1..9 %}
-                        <td class="{{ macros.setBorderClass(horizontal, vertical) }}">
-                            <div class="keep-ratio-parent">
-                                {% set v = sudoku[horizontal][vertical] %}
+                        <td class=" {{ macros.setBorderClass(horizontal, vertical) }}">
+                            {% set v = sudoku[horizontal][vertical] %}
+                            <div style="cursor: default" class="keep-ratio-child center-cell">
+                                <span></span>
                                 {% if sudokuOriginal[horizontal][vertical] != 0 %}
-                                    <input value="{{ v }}" disabled
-                                           class="number-original keep-ratio-child">
+                                    <span class="number-original">{{ v }}</span>
                                 {% elseif v != 0 %}
-                                    <input value="{{ v }}" disabled
-                                            class="keep-ratio-child" />
+                                    <span>{{ v }}</span>
                                 {% endif %}
                             </div>
                         </td>
+                        {#<td>#}
+                            {#<div class="keep-ratio-parent {{ macros.setBorderClass(horizontal, vertical) }}">#}
+                                {#{% set v = sudoku[horizontal][vertical] %}#}
+                                {#{% if sudokuOriginal[horizontal][vertical] != 0 %}#}
+                                    {#<input value="{{ v }}" disabled#}
+                                           {#class="number-original keep-ratio-child">#}
+                                {#{% elseif v != 0 %}#}
+                                    {#<input value="{{ v }}" disabled#}
+                                            {#class="keep-ratio-child" />#}
+                                {#{% endif %}#}
+                            {#</div>#}
+                        {#</td>#}
                     {% endfor %}
                 </tr>
             {% endfor %}

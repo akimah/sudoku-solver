@@ -1,16 +1,19 @@
 var currentCell;
 var oldCell;
 
-function cellPress(cell, event) {
+function cellPress(cellParent) {
     oldCell = currentCell;
     if (typeof oldCell != "undefined")
         oldCell.classList.remove("cellPressed");
-    currentCell = cell;
+    currentCell = cellParent;
+    console.log(cellParent);
+    console.log(cellParent);
     currentCell.classList.add("cellPressed");
 }
 
 function setCellNumber(number) {
-    currentCell.setAttribute("value", number);
+    currentCell.getElementsByTagName("input")[0].setAttribute("value", number);
+    currentCell.getElementsByTagName("span")[0].innerHTML = number;
 }
 
 function resetCells() {
@@ -26,11 +29,14 @@ function resetCells() {
 }
 
 $(document).on("keypress", function (e) {
-    var key = String.fromCharCode(e.keyCode);
+    var key = String.fromCharCode(e.which);
     var value = parseInt(key);
     const MIN_RANGE = 1;
     const MAX_RANGE = 9;
     var valueInRange = value <= MAX_RANGE && value >= MIN_RANGE;
+    console.log(e.which);
+    console.log(key);
+    console.log(value);
     if (valueInRange)
-        currentCell.setAttribute("value", key);
+        setCellNumber(value);
 });
