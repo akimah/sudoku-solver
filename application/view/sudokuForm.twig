@@ -1,21 +1,45 @@
 {% import _self as self %}
 
-<article class="col-lg-offset-4 col-lg-4">
-<div class="panel panel-info sudoku-panel">
-    <div class="panel-heading">
-        <h4>{{ title }}</h4>
+<article class="sudoku-form col-md-offset-3 col-md-6">
+
+    <div class="panel panel-info sudoku-panel">
+        <div class="panel-heading">
+            <h4>{{ title }}</h4>
+        </div>
+        <div class="panel-body">
+        <form action="." method="post" class="text-center">
+            <div class="keep-ratio-parent">
+                <table class="keep-ratio-child">
+                    {{ self.printCells() }}
+                </table>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-raised btn-success">CHECK</button>
+            <button type="reset" onclick="resetCells()" class="btn btn-raised btn-danger">RESET</button>
+        </form>
+        </div>
     </div>
-    <div class="panel-body">
-    <form action="." method="post" class="text-center">
-        <table>
-            {{ self.printCells() }}
-        </table>
-        <br>
-        <button type="submit" class="btn btn-raised btn-success">CHECK</button>
-        <button type="reset" onclick="resetCells()" class="btn btn-raised btn-danger">RESET</button>
-    </form>
+
+    <div class="horizontal-buttons visible-sm visible-xs">
+        <div class="btn-group">
+            {% for n in 1..9 %}
+                <a onclick="setCellNumber({{ n }})" class="btn btn-raised">
+                    {{ n }}
+                </a>
+            {% endfor %}
+        </div>
     </div>
-</div>
+
+</article>
+
+<article class="col-md-3 hidden-sm hidden-xs">
+    <div class="btn-group-vertical">
+        {% for n in 1..9 %}
+            <a onclick="setCellNumber({{ n }})" class="btn btn-raised">
+                {{ n }}
+            </a>
+        {% endfor %}
+    </div>
 </article>
 
 {% macro printCells() %}
@@ -25,22 +49,15 @@
         <tr>
             {% for horizontal in 1..9 %}
                 <td class="{{ macros.setBorderClass(horizontal, vertical) }}">
-                    <input id="{{ vertical }}{{ horizontal }}"
-                           name="{{ vertical }}{{ horizontal }}"
-                           onclick="cellPress(this, event)"
-                           type="text" readonly />
+                    <div class="keep-ratio-parent">
+                        <input id="{{ vertical }}{{ horizontal }}"
+                               class="keep-ratio-child"
+                               name="{{ vertical }}{{ horizontal }}"
+                               onclick="cellPress(this, event)"
+                               type="text" readonly />
+                    </div>
                 </td>
             {% endfor %}
         </tr>
     {% endfor %}
 {% endmacro %}
-
-<article class="col-lg-1">
-    <div class="btn-group-vertical">
-        {% for n in 1..9 %}
-            <a onclick="setCellNumber({{ n }})" class="btn btn-raised">
-                {{ n }}
-            </a>
-        {% endfor %}
-    </div>
-</article>

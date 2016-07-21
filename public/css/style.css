@@ -1,7 +1,6 @@
 table * {
-	font-size: 2.1rem;
+	font-size: 2.5rem;
 }
-
 header {
 	margin-bottom: 50px;
 }
@@ -9,45 +8,47 @@ header h2 {
 	color: #448AFF;
 	padding-bottom: 5px;
 }
-
 section {
 	margin-bottom: 60px;
 }
 table tr td {
-	border: 1px solid #777;
+	border: 1px solid #999;
 	padding: 0;
 	margin: 0;
-}
-table tr td, table tr td input {
-	height: 45px !important;
-	width: 45px !important;
-	text-align: center;
-	margin: 0;
+	width: 0;
+	position: relative;
 }
 table tr td input {
-	height: 45px !important;
-	width: 45px !important;
 	text-align: center;
 	margin: 0;
 	padding: 0;
 	border: 0;
 	background-color: #fff;
-	z-index: -100;
 }
-
+.sudoku-panel {
+	max-width: 500px;
+	margin: auto;
+}
+.keep-ratio-parent {
+	width: 100%;
+	height: 0;
+	padding-top: 50%;
+	padding-bottom: 50%;
+	position: relative;
+}
+.keep-ratio-child {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
 table {
 	border-collapse: collapse;
 	background-color: #fafafa !important;
 	margin: 0 auto;
-}
-
-select {
-	width: 100%;
-	height: 100%;
-	border: 0;
-   	-webkit-appearance: none;
-   	-moz-appearance: none;
-	padding-left: 14px;
 }
 
 footer {
@@ -73,28 +74,29 @@ footer a:hover {
 	margin: 0 75px 150px;
 }
 
-.left-strong {
-	border-left: 2px solid;
-}
-.right-strong {
-	border-right: 2px solid;
-}
 .bottom-strong {
 	border-bottom: 2px solid;
 }
 .top-strong {
 	border-top: 2px solid;
 }
+.left-strong {
+	border-left: 2px solid;
+}
+.right-strong::after {
+	content: '';
+	width: 2px;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	right: -1px;
+	border-right: 2px solid;
+	z-index: auto;
+}
 
 .number-original {
 	color: #F44336;
 }
-
-.sudoku-panel {
-	width: 450px;
-	margin: auto;
-}
-
 header .well, footer.well {
 	border-radius: 0;
 	border-left: 0;
@@ -108,10 +110,24 @@ div.panel.panel-info>.panel-heading {
 .cellPressed {
 	background-color: #FFF9C4;
 }
+.btn-group {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+.btn-group a {
+	padding: 15px 21px !important;
+}
 .btn-group-vertical {
 	margin-top: 0 !important;
+	float: left;
 }
 .btn-group-vertical a {
 	font-size: 1.9rem;
 	line-height: 2;
+}
+
+@media screen and (max-width: 450px) {
+	table * {
+		font-size: 2rem;
+	}
 }
