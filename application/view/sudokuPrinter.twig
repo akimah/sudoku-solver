@@ -1,26 +1,32 @@
 {% import ('macros.twig') as macros %}
-<article class="col-md-6">
+<article class="col-md-6 col-xs-12">
 <div class="panel panel-info sudoku-panel">
     <div class="panel-heading">
         <h4>{{ title }}</h4>
     </div>
     <div class="panel-body">
-        <table>
+        <div class="keep-ratio-parent">
+        <table class="keep-ratio-child">
             {% for vertical in 1..9 %}
                 <tr>
                     {% for horizontal in 1..9 %}
                         <td class="{{ macros.setBorderClass(horizontal, vertical) }}">
-                            {% set v = sudoku[horizontal][vertical] %}
-                            {% if sudokuOriginal[horizontal][vertical] != 0 %}
-                                <span class="number-original">{{ v }}</span>
-                            {% elseif v != 0 %}
-                                <span>{{ v }}</span>
-                            {% endif %}
+                            <div class="keep-ratio-parent">
+                                {% set v = sudoku[horizontal][vertical] %}
+                                {% if sudokuOriginal[horizontal][vertical] != 0 %}
+                                    <input value="{{ v }}" disabled
+                                           class="number-original keep-ratio-child">
+                                {% elseif v != 0 %}
+                                    <input value="{{ v }}" disabled
+                                            class="keep-ratio-child" />
+                                {% endif %}
+                            </div>
                         </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
         </table>
+        </div>
     </div>
 </div>
 </article>
