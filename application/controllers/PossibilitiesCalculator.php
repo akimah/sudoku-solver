@@ -35,7 +35,7 @@ class PossibilitiesCalculator
         for ($vertical = $quadrant->getLimitTop(); $vertical <= $quadrant->getLimitBottom(); $vertical++) {
             for ($horizontal = $quadrant->getLimitLeft(); $horizontal <= $quadrant->getLimitRight(); $horizontal++) {
                 if ($vertical != $cell->getPosition()->getVertical() || $horizontal != $cell->getPosition()->getHorizontal()) {
-                    $currentPosition = new Position($cell->getPosition()->getHorizontal(), $vertical);
+                    $currentPosition = new Position($horizontal, $vertical);
                     $currentCell = $sudoku->getCell($currentPosition);
                     $allPossibilities->addPossibilites($currentCell->getPossibility()->getPossibilities());
                 }
