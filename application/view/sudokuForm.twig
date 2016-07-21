@@ -48,13 +48,14 @@
     {% for vertical in 1..9 %}
         <tr>
             {% for horizontal in 1..9 %}
-                <td class="{{ macros.setBorderClass(horizontal, vertical) }}">
-                    <div class="keep-ratio-parent">
+                <td class=" {{ macros.setBorderClass(horizontal, vertical) }}"
+                    onclick="cellPress(this)">
+                    <div style="cursor: default" class="keep-ratio-child center-cell">
+                        <span></span>
                         <input id="{{ vertical }}{{ horizontal }}"
                                class="keep-ratio-child"
                                name="{{ vertical }}{{ horizontal }}"
-                               onclick="cellPress(this, event)"
-                               type="text" readonly />
+                               type="text" hidden />
                     </div>
                 </td>
             {% endfor %}
