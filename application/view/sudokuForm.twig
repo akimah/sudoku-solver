@@ -1,4 +1,6 @@
 {% import _self as self %}
+
+<article class="col-lg-offset-4 col-lg-4">
 <div class="panel panel-info sudoku-panel">
     <div class="panel-heading">
         <h4>{{ title }}</h4>
@@ -10,10 +12,12 @@
         </table>
         <br>
         <button type="submit" class="btn btn-raised btn-success">CHECK</button>
-        <button type="reset" class="btn btn-raised btn-danger">RESET</button>
+        <button type="reset" onclick="resetCells()" class="btn btn-raised btn-danger">RESET</button>
     </form>
     </div>
 </div>
+</article>
+
 {% macro printCells() %}
     {% import _self as self %}
     {% import ('macros.twig') as macros %}
@@ -21,21 +25,22 @@
         <tr>
             {% for horizontal in 1..9 %}
                 <td class="{{ macros.setBorderClass(horizontal, vertical) }}">
-                    <select name="{{ vertical }}{{ horizontal }}">
-                        {{ self.printOptions() }}
-                    </select>
+                    <input id="{{ vertical }}{{ horizontal }}"
+                           name="{{ vertical }}{{ horizontal }}"
+                           onclick="cellPress(this, event)"
+                           type="text" readonly />
                 </td>
             {% endfor %}
         </tr>
     {% endfor %}
 {% endmacro %}
 
-{% macro printOptions() %}
-    {% for o in 0..9 %}
-        <option value="{{ o }}">
-            {% if o > 0 %}
-                {{ o }}
-            {% endif %}
-        </option>
-    {% endfor %}
-{% endmacro %}
+<article class="col-lg-1">
+    <div class="btn-group-vertical">
+        {% for n in 1..9 %}
+            <a onclick="setCellNumber({{ n }})" class="btn btn-raised">
+                {{ n }}
+            </a>
+        {% endfor %}
+    </div>
+</article>
