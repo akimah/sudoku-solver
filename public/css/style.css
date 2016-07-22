@@ -19,6 +19,7 @@ table tr td {
 	position: relative;
 	display: table-cell;
 	vertical-align: middle;
+	text-align: center;
 }
 table tr td div {
 	z-index: 100;
