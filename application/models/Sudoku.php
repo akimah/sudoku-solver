@@ -31,6 +31,11 @@ class Sudoku implements Observer
 
     }
 
+    public function __clone()
+    {
+        $this->cells = array_merge(array(), $this->cells);
+    }
+
     public function getCells()
     {
         return $this->cells;

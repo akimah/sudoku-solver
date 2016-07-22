@@ -19,28 +19,40 @@ class SudokuCalculator implements Observer
 
     function calculate()
     {
-        while ($this->hasChanged) {
-            $this->hasChanged = false;
-            $this->assignSimple();
-            $this->assignByPossibilityHorizontal();
-            $this->assignByPossibilityVertical();
-            $this->assignByPossibilityQuadrant();
+        $this->assign($this->sudoku);
+
+        $n = 0;
+        while ($this->sudoku->isIncompleted() && $n < 1000) {
+            $this->randomSolution();
+            $n++;
         }
     }
 
-    private function assignSimple()
+    private function assign(Sudoku &$sudoku)
     {
-        foreach ($this->sudoku->getCells() as $cell) {
+        while ($this->hasChanged) {
+            $this->hasChanged = false;
+            $this->assignSimple($sudoku);
+            $this->assignByPossibilityHorizontal($sudoku);
+            $this->assignByPossibilityVertical($sudoku);
+            $this->assignByPossibilityQuadrant($sudoku);
+        }
+        $this->hasChanged = true;
+    }
+
+    private function assignSimple(Sudoku &$sudoku)
+    {
+        foreach ($sudoku->getCells() as $cell) {
             if ($cell instanceof Cell)
                 $cell->setValueIfUnique();
         }
     }
 
-    private function assignByPossibilityHorizontal()
+    private function assignByPossibilityHorizontal(Sudoku &$sudoku)
     {
-        foreach ($this->sudoku->getCells() as $cell) {
+        foreach ($sudoku->getCells() as $cell) {
             if (!$cell instanceof Cell) return;
-            $allPossibilities = PossibilitiesCalculator::getHorizontal($this->sudoku, $cell);
+            $allPossibilities = PossibilitiesCalculator::getHorizontal($sudoku, $cell);
             foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
                 if ($allPossibilities->notExists($possibility)) {
                     $cell->setValue($possibility);
@@ -50,11 +62,11 @@ class SudokuCalculator implements Observer
         }
     }
 
-    private function assignByPossibilityVertical()
+    private function assignByPossibilityVertical(Sudoku &$sudoku)
     {
-        foreach ($this->sudoku->getCells() as $cell) {
+        foreach ($sudoku->getCells() as $cell) {
             if (!$cell instanceof Cell) return;
-            $allPossibilities = PossibilitiesCalculator::getVertical($this->sudoku, $cell);
+            $allPossibilities = PossibilitiesCalculator::getVertical($sudoku, $cell);
             foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
                 if ($allPossibilities->notExists($possibility)) {
                     $cell->setValue($possibility);
@@ -64,11 +76,11 @@ class SudokuCalculator implements Observer
         }
     }
 
-    private function assignByPossibilityQuadrant()
+    private function assignByPossibilityQuadrant(Sudoku &$sudoku)
     {
-        foreach ($this->sudoku->getCells() as $cell) {
+        foreach ($sudoku->getCells() as $cell) {
             if (!$cell instanceof Cell) return;
-            $allPossibilities = PossibilitiesCalculator::getQuadrant($this->sudoku, $cell);
+            $allPossibilities = PossibilitiesCalculator::getQuadrant($sudoku, $cell);
             foreach ($cell->getPossibility()->getPossibilities() as $possibility) {
                 if ($allPossibilities->notExists($possibility)) {
                     $cell->setValue($possibility);
@@ -86,6 +98,27 @@ class SudokuCalculator implements Observer
     public function getSudoku()
     {
         return $this->sudoku;
+    }
+
+    private function randomSolution()
+    {
+        $sudoku = new Sudoku($this->sudoku->toArray());
+        foreach ($sudoku->getCells() as $cell) {
+            if (!$cell instanceof Cell) break;
+            if ($cell->isEmpty()) {
+                if ($cell->getPossibility()->count() == 0) return;
+                $value = $cell->getPossibility()
+                    ->getPossibility(rand(0, $cell->getPossibility()->count() - 1));
+                $cell->setValue($value);
+                $this->assign($sudoku);
+            }
+        }
+        $cell = $sudoku->getCell(new Position(1, 4));
+        if ($cell instanceof Cell)
+            echo $cell->getValue();
+        if ($sudoku->isCompleted()) {
+            $this->sudoku = $sudoku;
+        }
     }
 
 }
