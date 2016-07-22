@@ -21,8 +21,9 @@ function resetCells() {
             var id = "";
             id += vertical;
             id += horizontal;
-            var cell = document.getElementById(id);
-            cell.setAttribute("value", "");
+            var cell = document.getElementById(id).parentNode;
+            cell.getElementsByTagName("input")[0].setAttribute("value", "");
+            cell.getElementsByTagName("span")[0].innerHTML = "";
         }
     }
 }
