@@ -11,7 +11,6 @@ $twig = new Twig_Environment($loader);
 if ($hasPost) {
     $sudoku = PostConverter::toSudoku($_POST);
     $sudokuEmpty = $sudoku->toArray();
-    $sudokuEmpty = $sudokuEmpty->toArray();
     $calculator = new SudokuCalculator($sudoku);
     $calculator->calculate();
     $sudoku = $calculator->getSudoku();
