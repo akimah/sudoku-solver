@@ -87,17 +87,13 @@ class Sudoku implements Observer
     public function toArray()
     {
         $sudokuArray = array();
-        for ($vertical = 1; $vertical <= 9; $vertical++) {
-            $sudokuArray[$vertical] = array();
-            for ($horizontal = 1; $horizontal <= 9; $horizontal++) {
-                foreach ($this->getCells() as $cell){
-                    if ($cell->getPosition()->getVertical() == $vertical &&
-                        $cell->getPosition()->getHorizontal() == $horizontal)
-                        $currentCell = $cell;
-                }
-                if (!isset($currentCell)) $currentCell = null;
-                $sudokuArray[$vertical][$horizontal] = $currentCell->getValue();
-            }
+        for ($i = 1; $i <= 9; $i++)
+            $sudokuArray[$i] = array();
+        foreach ($this->cells as $cell) {
+            $value = $cell->getValue();
+            $horizontal = $cell->getPosition()->getHorizontal();
+            $vertical = $cell->getPosition()->getVertical();
+            $sudokuArray[$horizontal][$vertical] = $value;
         }
         return $sudokuArray;
     }

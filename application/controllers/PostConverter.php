@@ -13,7 +13,7 @@ class PostConverter
                 if (isset($values[$horizontal . $vertical])) {
                     array_push($sudokuArray[$horizontal], $values[$horizontal . $vertical]);
                 } else {
-                    $sudokuArray[$vertical][$horizontal] = 0;
+                    $sudokuArray[$horizontal][$vertical] = 0;
                 }
             }
         }
