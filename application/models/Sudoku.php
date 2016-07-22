@@ -7,6 +7,9 @@ class Sudoku implements Observer
     const LIMIT_TOP = 1;
     const LIMIT_BOTTOM = 9;
 
+    /**
+     * @var Cell[]
+     */
     private $cells;
 
     public function __construct(array $values = array())
@@ -36,6 +39,9 @@ class Sudoku implements Observer
         $this->cells = array_merge(array(), $this->cells);
     }
 
+    /**
+     * @return Cell[]
+     */
     public function getCells()
     {
         return $this->cells;
@@ -44,11 +50,9 @@ class Sudoku implements Observer
     public function getCell(Position $position)
     {
         foreach ($this->cells as $cell) {
-            if ($cell instanceof Cell) {
-                if ($cell->getPosition()->getHorizontal() == $position->getHorizontal() &&
-                $cell->getPosition()->getVertical() == $position->getVertical()) {
-                    return $cell;
-                }
+            if ($cell->getPosition()->getHorizontal() == $position->getHorizontal() &&
+            $cell->getPosition()->getVertical() == $position->getVertical()) {
+                return $cell;
             }
         }
         return null;
@@ -63,9 +67,7 @@ class Sudoku implements Observer
     public function isCompleted()
     {
         foreach ($this->cells as $cell){
-            if ($cell instanceof Cell) {
-                if ($cell->isEmpty()) return false;
-            }
+            if ($cell->isEmpty()) return false;
         }
         return true;
     }
@@ -89,11 +91,9 @@ class Sudoku implements Observer
             $sudokuArray[$vertical] = array();
             for ($horizontal = 1; $horizontal <= 9; $horizontal++) {
                 foreach ($this->getCells() as $cell){
-                    if ($cell instanceof Cell) {
-                        if ($cell->getPosition()->getVertical() == $vertical &&
-                            $cell->getPosition()->getHorizontal() == $horizontal)
-                            $currentCell = $cell;
-                    }
+                    if ($cell->getPosition()->getVertical() == $vertical &&
+                        $cell->getPosition()->getHorizontal() == $horizontal)
+                        $currentCell = $cell;
                 }
                 if (!isset($currentCell)) $currentCell = null;
                 $sudokuArray[$vertical][$horizontal] = $currentCell->getValue();

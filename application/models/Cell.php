@@ -6,6 +6,9 @@ class Cell implements Observable
     private $position;
     private $value;
     private $possibility;
+    /**
+     * @var Observer[]
+     */
     private $observers;
 
     function __construct(Position $position, $content)
@@ -82,10 +85,8 @@ class Cell implements Observable
 
     function notifyObservers()
     {
-        foreach ($this->observers as $o) {
-            if ($o instanceof Observer)
-                $o->update($this);
-        }
+        foreach ($this->observers as $o)
+            $o->update($this);
     }
 
 }
