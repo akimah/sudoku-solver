@@ -1,11 +1,11 @@
 application: sudoku-solver
-version: 1.2
+version: 2
 runtime: php55
 api_version: 1
 threadsafe: yes
 
 handlers:
-- url: /favicon\.ico
+- url: /img/favicon\.ico
   static_files: public/img/favicon.ico
   upload: public/img/favicon\.ico
 
